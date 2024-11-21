@@ -1,0 +1,144 @@
+from turtle import *
+from time import sleep
+import sys
+
+t = Turtle()
+t.hideturtle()
+t.penup()
+
+ti = Turtle()
+ti.hideturtle()
+ti.speed(0)
+ti.penup()
+
+class Country:
+    def __init__(self, name, capital, size, continent, language, currency):
+        self.name = name
+        self.capital = capital
+        self.size = size
+        self.continent = continent
+        self.language = language
+        self.currency = currency
+    def display_info(self, t):
+        t.clear()
+        t.goto(-250, 150)
+        t.write(f"Country: {self.name}", font=('Arial', 18, 'normal'))
+        t.goto(-250, 120)
+        t.write(f"Capital City: {self.capital}", font=('Arial', 18, 'normal'))
+        t.goto(-250, 90)
+        t.write(f"Size: {self.size} km²", font=('Arial', 18, 'normal'))
+        t.goto(-250, 60)
+        t.write(f"Continent: {self.continent}", font=('Arial', 18, 'normal'))
+        t.goto(-250, 30)
+        t.write(f"Main Language: {self.language}", font=('Arial', 18, 'normal'))
+        t.goto(-250, 0)
+        t.write(f"Currency: {self.currency}", font=('Arial', 18, 'normal'))
+        sleep(10)
+
+class CountryManager:
+    def __init__(self, turtle_object):
+        self.turtle = turtle_object
+        self.countries = {
+            'canada': Country('Canada', 'Ottawa', 9976140, 'North America', 'English and French', 'Canadian Dollar'),
+            'america': Country('United States', 'Washington, D.C.', 9372610, 'North America', 'English', 'US Dollar'),
+            'us': Country('United States', 'Washington, D.C.', 9372610, 'North America', 'English', 'US Dollar'),
+            'united states': Country('United States', 'Washington, D.C.', 9372610, 'North America', 'English', 'US Dollar'),
+            'mexico': Country('Mexico', 'Mexico City', 1964375, 'North America', 'Spanish', 'Mexican Peso'),
+            'france': Country('France', 'Paris', 551695, 'Europe', 'French', 'Euro'),
+            'brazil': Country('Brazil', 'Brasília', 8515767, 'South America', 'Portuguese', 'Brazilian Real'),
+            'germany': Country('Germany', 'Berlin', 357022, 'Europe', 'German', 'Euro'),
+            'argentina': Country('Argentina', 'Buenos Aires', 2780400, 'South America', 'Spanish', 'Argentine Peso'),
+            'russia': Country('Russia', 'Moscow', 17098242, 'Europe/Asia', 'Russian', 'Russian Ruble'),
+            'china': Country('China', 'Beijing', 9596961, 'Asia', 'Mandarin', 'Renminbi (Yuan)'),
+            'italy': Country('Italy', 'Rome', 301340, 'Europe', 'Italian', 'Euro'),
+            'japan': Country('Japan', 'Tokyo', 377975, 'Asia', 'Japanese', 'Yen'),
+            'india': Country('India', 'New Delhi', 3287263, 'Asia', 'Hindi and English', 'Indian Rupee'),
+            'poland': Country('Poland', 'Warsaw', 312696, 'Europe', 'Polish', 'Polish Zloty'),
+            'britain': Country('United Kingdom', 'London', 243610, 'Europe', 'English', 'Pound Sterling'),
+            'uk': Country('United Kingdom', 'London', 243610, 'Europe', 'English', 'Pound Sterling'),
+            'united kingdom': Country('United Kingdom', 'London', 243610, 'Europe', 'English', 'Pound Sterling'),
+            'spain': Country('Spain', 'Madrid', 505992, 'Europe', 'Spanish', 'Euro'),
+            'portugal': Country('Portugal', 'Lisbon', 92090, 'Europe', 'Portuguese', 'Euro'),
+            'iceland': Country('Iceland', 'Reykjavík', 103000, 'Europe', 'Icelandic', 'Icelandic Króna'),
+            'thailand': Country('Thailand', 'Bangkok', 513120, 'Asia', 'Thai', 'Thai Baht'),
+            'indonesia': Country('Indonesia', 'Jakarta', 1904569, 'Asia', 'Indonesian', 'Rupiah'),
+            'belgium': Country('Belgium', 'Brussels', 30528, 'Europe', 'Dutch, French, German', 'Euro'),
+            'jordan': Country('Jordan', 'Amman', 89342, 'Asia', 'Arabic', 'Jordanian Dinar'),
+            'saudi arabia': Country('Saudi Arabia', 'Riyadh', 2149690, 'Asia', 'Arabic', 'Saudi Riyal'),
+            'saudi': Country('Saudi Arabia', 'Riyadh', 2149690, 'Asia', 'Arabic', 'Saudi Riyal'),
+            'denmark': Country('Denmark', 'Copenhagen', 42933, 'Europe', 'Danish', 'Danish Krone'),
+            'morocco': Country('Morocco', 'Rabat', 710850, 'Africa', 'Arabic, Berber', 'Moroccan Dirham'),
+            'vatican city': Country('Vatican City', 'Vatican City', 0.44, 'Europe', 'Italian', 'Euro'),
+            'egypt': Country('Egypt', 'Cairo', 1001450, 'Africa', 'Arabic', 'Egyptian Pound'),
+            'lebanon': Country('Lebanon', 'Beirut', 10452, 'Asia', 'Arabic', 'Lebanese Pound'),
+            'iraq': Country('Iraq', 'Baghdad', 438317, 'Asia', 'Arabic, Kurdish', 'Iraqi Dinar'),
+            'oman': Country('Oman', 'Muscat', 309500, 'Asia', 'Arabic', 'Omani Rial'),
+            'kuwait': Country('Kuwait', 'Kuwait City', 17818, 'Asia', 'Arabic', 'Kuwaiti Dinar'),
+            'turkey': Country('Turkey', 'Ankara', 783356, 'Asia', 'Turkish', 'Turkish Lira'),
+            'sudan': Country('Sudan', 'Khartoum', 1861484, 'Africa', 'Arabic', 'Sudanese Pound'),
+            'yemen': Country('Yemen', 'Sanaa', 527968, 'Asia', 'Arabic', 'Yemeni Rial'),
+            'libya': Country('Libya', 'Tripoli', 1759540, 'Africa', 'Arabic', 'Libyan Dinar'),
+            'tunisia': Country('Tunisia', 'Tunis', 163610, 'Africa', 'Arabic', 'Tunisian Dinar'),
+            'algeria': Country('Algeria', 'Algiers', 2381741, 'Africa', 'Arabic', 'Algerian Dinar'),
+            'syria': Country('Syria', 'Damascus', 185180, 'Asia', 'Arabic', 'Syrian Pound'),
+            'luxembourg': Country('Luxembourg', 'Luxembourg City', 2586, 'Europe', 'Luxembourgish, French, German', 'Euro'),
+            'mauritania': Country('Mauritania', 'Nouakchott', 1030700, 'Africa', 'Arabic', 'Ouguiya'),
+            'somalia': Country('Somalia', 'Mogadishu', 637657, 'Africa', 'Somali', 'Somali Shilling'),
+            'sweden': Country('Sweden', 'Stockholm', 450295, 'Europe', 'Swedish', 'Swedish Krona'),
+            'palestine': Country('Palestine', 'Ramallah', 6020, 'Asia', 'Arabic', 'Israeli New Shekel'),
+            'south korea': Country('South Korea', 'Seoul', 100032, 'Asia', 'Korean', 'South Korean Won'),
+        }
+
+    def signiture(self):
+        ti.penup()
+        ti.goto(-250, -150)
+        ti.write('Adam', font=('Times New Roman', 18, 'normal'))
+        ti.goto(50, -150)
+        ti.write('#free_palestine', font=('Times New Roman', 18, 'normal'))
+
+    def prompt_country(self):
+        self.signiture()
+        t.clear()
+        self.turtle.clear()
+        t.goto(-220, 50)
+        t.write('What country are you searching for?', font=('Arial', 18, 'normal'))
+        t.goto(-90, 20)
+        t.write('0 = stop', font=('Arial', 18, 'normal'))
+
+        country_input = scr.textinput("Choose", "What country are you ").lower()
+        t.clear()
+        self.turtle.clear()
+        country_input = country_input.lower()
+        if country_input == '0':
+            t.clear()
+            t.goto(-180, 50)
+            t.write('Program stopping ...', font = ('Arial', 18, 'normal'))
+            sleep(1)
+            return
+        self.handle_country(country_input)
+
+    def handle_country(self, country_name):
+        if country_name in self.countries:
+            self.countries[country_name].display_info(self.turtle)
+        else:
+            t.clear()
+            t.clear()
+            t.goto(-230, 50)
+            t.write('Country not found. Please try again.', font=('Arial', 18, 'normal'))
+            sleep(2)
+            t.clear()
+        self.prompt_country()
+
+#the main def
+def main():
+    #making main turtle
+    t = Turtle()
+    t.hideturtle()
+    t.speed(0)
+    t.penup()
+
+    country_manager = CountryManager(t)
+    country_manager.prompt_country()
+
+if __name__ == '__main__':
+    main()

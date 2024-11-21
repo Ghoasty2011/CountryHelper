@@ -1,0 +1,110 @@
+from turtle import *
+from time import * 
+from random import *
+import sys
+
+t = Turtle()
+ti = Turtle()
+
+scr = t.getscreen()
+
+t.hideturtle()
+t.speed(0)
+t.penup()
+t.color("white")
+
+ti.speed(0)
+ti.penup()
+ti.hideturtle()
+ti.color("white")
+
+simple_math = []
+simple_mathR = []
+simple_math2 =[]
+simple_math2R = []
+basic_math = []
+basic_mathR = []
+basic_math2 =[]
+basic_math2R = []
+modarate_math[]
+modarate_mathR = []
+modarate_math2 = []
+modorate_math2R = []
+hard_math = []
+hard_mathR = []
+hard_math2 =[]
+hard_math2R = []
+extreme_math = []
+extreme_mathR = []
+extreme_math2R = []
+
+grades = {
+    1: simple_mathR,
+    2: simple_math2R,
+    3: basic_mathR,
+    4: basic_math2R,
+    5: modarate_mathR,
+    6: modorate_math2R,
+    7: hard_mathR,
+    8: hard_math2R,
+    9: extreme_mathR,
+    10: extreme_math2R,
+    }
+
+def clear():
+    ti.clear()
+    t.clear()
+
+def insert_info():
+    ti.goto(-160, 0)
+    ti.write("Insert Info", font = ('Courier', 30, 'normal'))
+
+def shape_problem(grades):
+    clear()
+    
+def math_problem(grades):
+    clear()
+    answer_2 = scr.textinput("Choose", "Do you want to ask a question or answer random questons?").lower()
+
+
+def start():
+    scr.bgcolor("black")
+    clear()
+    insert_info()
+    name = scr.textinput("Name", "What is your name?")
+    if name == "" or name == " ":
+        name = "Unkown person"
+    grade_input = scr.textinput("Grade", "What grade are you in?")
+    try:
+        grade = int(grade_input)
+    except ValueError:
+        grade = 0 
+    if grade > 10 or grade < 1:
+        clear()
+        t.goto(-250, 0)
+        t.write("This grade is too high or too low!!", font=('Courier', 20, 'normal'))
+        t.goto(-200, -50)
+        t.write("Please try again", font=('Courier', 18, 'normal'))
+        sleep(2)
+        start()
+        return
+    grade_name = grades.get(grade, "Unkown Grade")
+    age = scr.textinput("Age","What is your age?")
+    clear()
+    t.goto(-200, 0)
+    t.write(f"Hi there, {name}!!", font = ('Times New Roman', 18, 'normal'))
+    sleep(2)
+    t.clear()
+    t.goto(-180, 0)
+    t.write(f"What are you up to, {name}?", font = ('Times New Roman', 18, 'normal'))
+    t.goto(-240, -50)
+    answer_1 = scr.textinput("Choose", "Math problem or Shape problem?").lower()
+    answer_1 = answer_1.lower()
+    if answer_1 in ["math problem", "1", "math"]:
+        math_problem(grades)
+    if answer_1 in ["Shape problem", "2", "shape"]:
+        shape_problem(grades)
+
+if __name__ == "__main__":
+    start()
+    scr.mainloop()
